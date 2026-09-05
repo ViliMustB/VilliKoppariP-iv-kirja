@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090b0c">
+<title>Villi kopparin päiväkirja</title>
+<style>
+:root{
+  --bg:#080a0b;--panel:rgba(12,15,16,.88);--line:rgba(255,255,255,.14);
+  --text:#fff;--muted:#b7b9bb;--orange:#ff6500;--green:#20c878;
+  --blue:#20a9ff;--purple:#b85cff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{padding-bottom:86px}
+button,input{font:inherit}
+.app{max-width:520px;margin:auto;min-height:100vh;position:relative;overflow:hidden;
+  background:
+  radial-gradient(circle at 50% 10%,rgba(255,101,0,.18),transparent 34%),
+  linear-gradient(180deg,#15191a 0%,#080a0b 44%,#07090a 100%)}
+.hero{min-height:430px;padding:18px 22px 24px;position:relative;display:flex;flex-direction:column;justify-content:flex-start}
+.hero:before{content:"";position:absolute;inset:0;background:
+  radial-gradient(ellipse at 50% 55%,rgba(255,101,0,.20),transparent 28%),
+  linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.78) 92%);pointer-events:none}
+.hero:after{content:"🛞";position:absolute;right:-18px;bottom:35px;font-size:250px;opacity:.07;transform:rotate(-12deg);pointer-events:none}
+.topbar,.hero-content{position:relative;z-index:2}
+.topbar{display:flex;justify-content:space-between;align-items:center}
+.iconbtn{width:46px;height:46px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.38);color:white;font-size:24px}
+.status{font-size:13px;color:#ddd;background:rgba(0,0,0,.38);border:1px solid var(--line);padding:8px 12px;border-radius:999px}
+.hero-content{margin-top:62px}
+.kicker{color:var(--orange);font-weight:800;letter-spacing:1.4px;font-size:12px;text-transform:uppercase}
+h1{font-size:42px;line-height:.98;margin:10px 0 14px;letter-spacing:-1.5px}
+.hero p{font-size:16px;color:#e2e2e2;margin:0;max-width:360px}
+.orange-line{width:78px;height:4px;background:var(--orange);border-radius:5px;margin-top:18px}
+.dashboard{position:relative;margin:-52px 16px 0;z-index:5;background:rgba(11,13,14,.94);border:1px solid var(--line);border-radius:22px;padding:10px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.stats{display:grid;grid-template-columns:repeat(2,1fr)}
+.stat{padding:15px 10px;text-align:center;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat:nth-child(2n){border-right:0}.stat:nth-last-child(-n+2){border-bottom:0}
+.stat .num{font-size:24px;font-weight:850}.stat .lbl{font-size:12px;color:var(--muted);margin-top:3px}
+main{padding:24px 16px 0}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:8px 2px 14px}
+.section-head h2{font-size:22px;margin:0}.link{color:var(--orange);font-weight:750;font-size:14px;background:none;border:0;padding:0}
+.entries{display:grid;gap:11px}
+.entry{background:rgba(17,20,21,.92);border:1px solid var(--line);border-radius:18px;padding:15px;display:grid;grid-template-columns:52px 1fr auto;gap:12px;align-items:start}
+.entry-icon{width:52px;height:52px;border:1px solid rgba(255,101,0,.5);border-radius:13px;display:grid;place-items:center;color:var(--orange);font-size:24px}
+.entry h3{font-size:17px;margin:1px 0 5px}.meta{font-size:12px;color:#c6c8ca}.desc{font-size:13px;color:#aeb1b3;margin-top:7px;line-height:1.35}
+.tag{font-size:11px;border:1px solid;border-radius:8px;padding:5px 8px;white-space:nowrap}
+.tag.ajo{color:#38dc91}.tag.pol{color:#36b7ff}.tag.huolto{color:var(--orange)}.tag.muisti{color:#c477ff}
+.empty{text-align:center;color:var(--muted);padding:35px 10px}
+.fab{position:fixed;right:max(20px,calc(50% - 240px));bottom:88px;width:62px;height:62px;border:0;border-radius:50%;background:var(--orange);color:#fff;font-size:38px;line-height:1;box-shadow:0 10px 28px rgba(255,101,0,.4);z-index:20}
+nav{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);width:min(488px,calc(100% - 20px));height:68px;background:rgba(13,15,16,.96);border:1px solid var(--line);border-radius:22px;display:grid;grid-template-columns:repeat(4,1fr);z-index:19;backdrop-filter:blur(14px)}
+nav button{border:0;background:none;color:#aeb1b3;font-size:11px;padding:7px 2px}.navicon{display:block;font-size:22px;margin-bottom:2px}nav button.active{color:var(--orange)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:flex-end;justify-content:center;z-index:30}
+.modal.open{display:flex}.sheet{width:min(520px,100%);background:#111415;border:1px solid var(--line);border-radius:24px 24px 0 0;padding:20px 18px 30px;max-height:90vh;overflow:auto}
+.sheet h2{margin:0 0 15px}.field{margin:12px 0}.field label{display:block;color:#c9cbcd;font-size:12px;margin-bottom:6px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#090b0c;color:white;border-radius:12px;padding:12px;outline:none}.field textarea{min-height:75px;resize:vertical}.actions{display:flex;gap:10px;margin-top:16px}.actions button{flex:1;padding:12px;border-radius:12px;border:0;font-weight:800}.cancel{background:#262a2b;color:#fff}.save{background:var(--orange);color:#fff}
+.toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,20px);background:#202425;color:white;border:1px solid var(--line);padding:11px 15px;border-radius:12px;opacity:0;pointer-events:none;transition:.2s;z-index:50;font-size:13px}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:700px){body{background:#020303}.app{box-shadow:0 0 80px rgba(0,0,0,.7)}}
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="hero">
+    <div class="topbar">
+      <button class="iconbtn" aria-label="Valikko" onclick="showToast('Valikko avautuu tässä')">☰</button>
+      <div class="status">● Päiväkirja käytössä</div>
+    </div>
+    <div class="hero-content">
+      <div class="kicker">Mönkijän oma päiväkirja</div>
+      <h1>Villi kopparin<br>päiväkirja</h1>
+      <p>Kirjaa ajot, tankkaukset, huollot ja tärkeät muistiinpanot.</p>
+      <div class="orange-line"></div>
+    </div>
+  </section>
+
+  <section class="dashboard">
+    <div class="stats">
+      <div class="stat"><div class="num" id="km">0 km</div><div class="lbl">Ajettu yhteensä</div></div>
+      <div class="stat"><div class="num" id="fuel">0,0 l</div><div class="lbl">Polttoainetta</div></div>
+      <div class="stat"><div class="num" id="cons">–</div><div class="lbl">Kulutus l/100 km</div></div>
+      <div class="stat"><div class="num" id="cost">0,00 €</div><div class="lbl">Polttoainekulut</div></div>
+    </div>
+  </section>
+
+  <main>
+    <div class="section-head">
+      <h2>Viimeisimmät merkinnät</h2>
+      <button class="link" onclick="openModal()">+ Lisää</button>
+    </div>
+    <div id="entries" class="entries"></div>
+  </main>
+
+  <button class="fab" onclick="openModal()" aria-label="Lisää merkintä">+</button>
+
+  <nav>
+    <button class="active" onclick="setTab(this)"><span class="navicon">⌂</span>Päiväkirja</button>
+    <button onclick="showToast('Tilastot ovat tulossa tähän näkymään')"><span class="navicon">▥</span>Tilastot</button>
+    <button onclick="showToast('Yhteenveto on tulossa tähän näkymään')"><span class="navicon">◔</span>Yhteenveto</button>
+    <button onclick="showToast('Asetukset ovat tulossa tähän näkymään')"><span class="navicon">⚙</span>Asetukset</button>
+  </nav>
+</div>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="sheet">
+    <h2>Lisää merkintä</h2>
+    <div class="field"><label>Päivä</label><input id="date" type="date"></div>
+    <div class="field"><label>Tyyppi</label><select id="type"><option value="ajo">Ajo</option><option value="pol">Polttoaine</option><option value="huolto">Huolto</option><option value="muisti">Muistiinpano</option></select></div>
+    <div class="field"><label>Odometrilukema / km</label><input id="odo" type="number" min="0" step="0.1" placeholder="esim. 1250"></div>
+    <div class="field"><label>Litrat (jos tankkaus)</label><input id="liters" type="number" min="0" step="0.1" placeholder="esim. 20"></div>
+    <div class="field"><label>Hinta €/l (jos tankkaus)</label><input id="price" type="number" min="0" step="0.001" placeholder="esim. 1.999"></div>
+    <div class="field"><label>Otsikko</label><input id="title" placeholder="esim. Kesälenkki"></div>
+    <div class="field"><label>Muistiinpanot</label><textarea id="note" placeholder="Mitä tapahtui?"></textarea></div>
+    <div class="actions"><button class="cancel" onclick="closeModal()">Peruuta</button><button class="save" onclick="addEntry()">Tallenna</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const KEY='villiKoppariEntriesV2';
+let data=JSON.parse(localStorage.getItem(KEY)||'null')||[
+ {date:'2025-05-05',type:'huolto',odo:1200,title:'Öljynvaihto',note:'Vaihdettu moottoriöljy ja öljynsuodatin.'},
+ {date:'2025-05-04',type:'ajo',odo:1115,title:'Kesälenkki',note:'Hieno ilta-ajo järven ympäri.'},
+ {date:'2025-05-03',type:'pol',odo:1030,liters:62,price:1.999,title:'Tankkaus',note:'Teiboil'},
+ {date:'2025-05-01',type:'muisti',odo:945,title:'Uudet renkaat',note:'Asennettu uudet maastorenkaat.'}
+];
+
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function fmt(n,d=1){return Number(n||0).toLocaleString('fi-FI',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function dateFmt(s){return new Date(s+'T12:00:00').toLocaleDateString('fi-FI',{day:'numeric',month:'numeric',year:'numeric'})}
+function icon(t){return {ajo:'⟿',pol:'⛽',huolto:'🔧',muisti:'▣'}[t]}
+function label(t){return {ajo:'Ajo',pol:'Polttoaine',huolto:'Huolto',muisti:'Muistiinpano'}[t]}
+function render(){
+ const e=[...data].sort((a,b)=>b.date.localeCompare(a.date));
+ let km=0,fuel=0,cost=0;
+ const odos=e.map(x=>Number(x.odo)||0).filter(Boolean);
+ if(odos.length>1) km=Math.max(...odos)-Math.min(...odos);
+ e.forEach(x=>{fuel+=Number(x.liters)||0;cost+=(Number(x.liters)||0)*(Number(x.price)||0)});
+ document.getElementById('km').textContent=fmt(km,0)+' km';
+ document.getElementById('fuel').textContent=fmt(fuel,1)+' l';
+ document.getElementById('cost').textContent=fmt(cost,2)+' €';
+ document.getElementById('cons').textContent=km&&fuel?fmt(fuel/km*100,1):'–';
+ const box=document.getElementById('entries');
+ box.innerHTML=e.length?e.slice(0,8).map((x,i)=>`
+ <article class="entry">
+  <div class="entry-icon">${icon(x.type)}</div>
+  <div>
+   <h3>${esc(x.title||label(x.type))}</h3>
+   <div class="meta">▣ ${dateFmt(x.date)}${x.odo!=null?' · '+fmt(x.odo,0)+' km':''}${x.liters?' · '+fmt(x.liters,1)+' l':''}</div>
+   ${x.note?`<div class="desc">${esc(x.note)}</div>`:''}
+  </div>
+  <div><span class="tag ${x.type}">${label(x.type)}</span></div>
+ </article>`).join(''):'<div class="empty">Ei vielä merkintöjä. Lisää ensimmäinen +-painikkeella.</div>';
+}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
+function openModal(){document.getElementById('modal').classList.add('open');document.getElementById('date').value=new Date().toISOString().slice(0,10)}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+function addEntry(){
+ const title=document.getElementById('title').value.trim();
+ const type=document.getElementById('type').value;
+ if(!title){showToast('Anna merkinnälle otsikko');return}
+ data.push({
+  date:document.getElementById('date').value||new Date().toISOString().slice(0,10),
+  type,odo:Number(document.getElementById('odo').value)||0,
+  liters:Number(document.getElementById('liters').value)||0,
+  price:Number(document.getElementById('price').value)||0,
+  title,note:document.getElementById('note').value.trim()
+ });
+ save();render();closeModal();
+ ['odo','liters','price','title','note'].forEach(id=>document.getElementById(id).value='');
+ showToast('Merkintä tallennettu ✓');
+}
+function setTab(btn){document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));btn.classList.add('active')}
+let toastTimer;function showToast(t){const x=document.getElementById('toast');x.textContent=t;x.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>x.classList.remove('show'),2200)}
+render();
+</script>
+</body>
+</html>
