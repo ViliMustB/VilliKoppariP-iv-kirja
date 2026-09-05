@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090b0b">
+<title>Villi kopparin päiväkirja</title>
+<style>
+:root{--orange:#ff6500;--orange2:#ff8a22;--bg:#080a0a;--panel:rgba(13,16,16,.86);--line:rgba(255,255,255,.18);--muted:#b9b9b9}
+*{box-sizing:border-box}html,body{margin:0;background:#080a0a;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+body{min-height:100vh;overflow-x:hidden}.app{min-height:100vh;max-width:560px;margin:auto;background:#080a0a;position:relative;box-shadow:0 0 60px #000}
+.hero{height:590px;position:relative;background:linear-gradient(180deg,rgba(0,0,0,.12),rgba(0,0,0,.18) 50%,#080a0a 100%),url("villi-koppari-tausta.jpg") center 38%/cover no-repeat}
+.topbar{padding:18px 20px 0;display:flex;justify-content:space-between;align-items:center}.iconbtn{width:46px;height:46px;border:0;border-radius:14px;background:rgba(0,0,0,.35);backdrop-filter:blur(8px);color:white;font-size:25px}.signal{font-size:14px;font-weight:700}
+.heroText{position:absolute;left:28px;right:28px;bottom:145px;text-shadow:0 2px 12px #000}.heroText h1{font-size:42px;line-height:1.02;margin:0 0 18px;font-weight:850;letter-spacing:-1.5px}.heroText p{font-size:20px;margin:0;color:#eee}.accent{width:78px;height:4px;background:var(--orange);margin-top:20px;border-radius:5px}
+.stats{position:absolute;left:20px;right:20px;bottom:-32px;background:rgba(10,12,12,.9);border:1px solid var(--line);border-radius:22px;display:grid;grid-template-columns:repeat(4,1fr);padding:18px 5px;backdrop-filter:blur(12px);box-shadow:0 12px 30px #0008}.stat{text-align:center;border-right:1px solid rgba(255,255,255,.22);padding:2px 3px}.stat:last-child{border:0}.stat .ico{font-size:27px;color:var(--orange);height:34px}.stat .name{font-size:13px;color:#ddd}.stat b{display:block;font-size:23px;margin-top:3px}
+.content{padding:60px 20px 105px}.sectionHead{display:flex;justify-content:space-between;align-items:center;margin:0 0 14px}.sectionHead h2{font-size:25px;margin:0}.link{color:var(--orange);font-weight:700;font-size:16px}
+.entry{background:linear-gradient(145deg,rgba(20,23,23,.95),rgba(8,10,10,.94));border:1px solid var(--line);border-radius:20px;padding:18px 16px;margin:10px 0;display:grid;grid-template-columns:68px 1fr auto;gap:15px;align-items:center;box-shadow:0 8px 22px #0005}.entryIcon{width:68px;height:68px;border:1px solid #9a3d05;border-radius:14px;display:grid;place-items:center;color:var(--orange);font-size:31px}.entry h3{margin:0 0 7px;font-size:20px}.meta{color:#c8c8c8;font-size:14px;margin-bottom:8px}.desc{color:#d2d2d2;font-size:14px;line-height:1.45}.tag{border:1px solid var(--orange);color:var(--orange);border-radius:8px;padding:5px 9px;font-size:12px;white-space:nowrap;align-self:start}.tag.green{border-color:#16a05a;color:#28c875}.tag.blue{border-color:#1582bd;color:#40b5ff}.tag.purple{border-color:#8a32c9;color:#c779ff}
+.fab{position:fixed;z-index:5;right:max(25px,calc((100vw - 560px)/2 + 25px));bottom:90px;width:66px;height:66px;border:0;border-radius:50%;background:var(--orange);color:white;font-size:43px;line-height:1;box-shadow:0 8px 25px #ff650088}.bottom{position:fixed;z-index:4;left:50%;transform:translateX(-50%);bottom:0;width:min(560px,100%);height:88px;background:rgba(12,14,14,.94);border:1px solid var(--line);border-bottom:0;border-radius:24px 24px 0 0;display:grid;grid-template-columns:repeat(4,1fr);backdrop-filter:blur(14px);padding:8px 8px env(safe-area-inset-bottom)}.nav{border:0;background:none;color:#bdbdbd;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:5px}.nav .nicon{font-size:25px}.nav.active{color:var(--orange)}.nav.active:after{content:"";width:54px;height:4px;background:var(--orange);border-radius:4px;margin-top:2px}
+.sheet{position:fixed;inset:0;background:#0009;z-index:10;display:none;align-items:flex-end}.sheet.open{display:flex}.modal{width:min(560px,100%);margin:auto auto 0;background:#121515;border:1px solid var(--line);border-radius:24px 24px 0 0;padding:20px 20px 28px}.modal h2{margin:0 0 15px}.types{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.type{padding:15px;border-radius:15px;background:#1b1f1f;color:white;border:1px solid #303636;text-align:left;font-size:16px}.type b{color:var(--orange);font-size:23px;display:block;margin-bottom:5px}
+@media(min-width:700px){body{background:#1d211f}.app{border-left:1px solid #333;border-right:1px solid #333}}
+</style>
+</head>
+<body>
+<div class="app">
+<section class="hero">
+  <div class="topbar"><button class="iconbtn" onclick="alert('Valikko')">☰</button><div class="signal">● ● ● &nbsp; 87%</div></div>
+  <div class="heroText"><h1>Villi kopparin<br>päiväkirja</h1><p>Kirjaa huollot, ajot ja muistiot ylös.</p><div class="accent"></div></div>
+  <div class="stats">
+    <div class="stat"><div class="ico">🔧</div><div class="name">Huollot</div><b id="sHuolto">3</b></div>
+    <div class="stat"><div class="ico">🛣</div><div class="name">Ajot</div><b id="sAjot">5</b></div>
+    <div class="stat"><div class="ico">⛽</div><div class="name">Polttoaine</div><b id="sFuel">62.0 l</b></div>
+    <div class="stat"><div class="ico">▣</div><div class="name">Muistiinpanot</div><b id="sNotes">2</b></div>
+  </div>
+</section>
+
+<main class="content">
+  <div class="sectionHead"><h2>Viimeisimmät merkinnät</h2><button class="link" onclick="showAll()">Näytä kaikki ›</button></div>
+  <div id="entries"></div>
+</main>
+
+<button class="fab" onclick="openSheet()">＋</button>
+<nav class="bottom">
+  <button class="nav active" onclick="setTab(this,'Päiväkirja')"><span class="nicon">⌂</span>Päiväkirja</button>
+  <button class="nav" onclick="setTab(this,'Tilastot')"><span class="nicon">▥</span>Tilastot</button>
+  <button class="nav" onclick="setTab(this,'Yhteenveto')"><span class="nicon">◔</span>Yhteenveto</button>
+  <button class="nav" onclick="setTab(this,'Asetukset')"><span class="nicon">⚙</span>Asetukset</button>
+</nav>
+</div>
+
+<div class="sheet" id="sheet" onclick="if(event.target===this)closeSheet()">
+ <div class="modal"><h2>Lisää merkintä</h2><div class="types">
+  <button class="type" onclick="add('Huolto','🔧','Vaihdettu moottoriöljy ja öljynsuodatin.','Huolto')"><b>🔧</b>Huolto</button>
+  <button class="type" onclick="add('Ajo','🛣','Hieno ilta-ajo järven ympäri.','Ajo')"><b>🛣</b>Ajo</button>
+  <button class="type" onclick="add('Tankkaus','⛽','Tankattu polttoainetta.','Polttoaine')"><b>⛽</b>Polttoaine</button>
+  <button class="type" onclick="add('Muistiinpano','▣','Uusi merkintä päiväkirjaan.','Muistiinpano')"><b>▣</b>Muistiinpano</button>
+ </div></div>
+</div>
+
+<script>
+const demo=[
+ {title:'Öljynvaihto',icon:'🔧',meta:'5.5.2025  •  120 h',desc:'Vaihdettu moottoriöljy ja öljynsuodatin.',tag:'Huolto',cls:''},
+ {title:'Kesälenkki',icon:'🛣',meta:'4.5.2025  •  85 km',desc:'Hieno ilta-ajo järven ympäri.',tag:'Ajo',cls:'green'},
+ {title:'Tankkaus',icon:'⛽',meta:'3.5.2025  •  62.0 l',desc:'Polttoaine tankattu.',tag:'Polttoaine',cls:'blue'},
+ {title:'Uudet renkaat',icon:'▣',meta:'1.5.2025',desc:'Asennettu uudet maastorenkaat, pito parani huomattavasti.',tag:'Muistiinpano',cls:'purple'}
+];
+let data=JSON.parse(localStorage.getItem('villi-mobile-entries')||'null')||demo;
+function render(){document.getElementById('entries').innerHTML=data.map((e,i)=>`<article class="entry"><div class="entryIcon">${e.icon}</div><div><h3>${e.title}</h3><div class="meta">${e.meta}</div><div class="desc">${e.desc}</div></div><div class="tag ${e.cls||''}">${e.tag}</div></article>`).join('');localStorage.setItem('villi-mobile-entries',JSON.stringify(data))}
+function openSheet(){document.getElementById('sheet').classList.add('open')}function closeSheet(){document.getElementById('sheet').classList.remove('open')}
+function add(title,icon,desc,tag){let d=new Date();data.unshift({title,icon,meta:`${d.getDate()}.${d.getMonth()+1}.${d.getFullYear()}`,desc,tag,cls:tag==='Ajo'?'green':tag==='Polttoaine'?'blue':tag==='Muistiinpano'?'purple':''});render();closeSheet()}
+function setTab(el,name){document.querySelectorAll('.nav').forEach(x=>x.classList.remove('active'));el.classList.add('active');if(name!=='Päiväkirja')alert(name+'-näkymä voidaan lisätä seuraavaksi.')}
+function showAll(){alert('Kaikki merkinnät näkyvät tässä päiväkirjassa.')}
+render();
+</script>
+</body>
+</html>
